@@ -1,3 +1,43 @@
 body {
-    background-color: green;
+    background-color: cornsilk;
+  }
+  img{
+    width: 600px;
+    height: 400px;
+  }
+  h1{
+    color:rgb(73, 50, 205);
+  }
+  h2{
+    color:rgb(19, 0, 128);
+  }
+  .btn{
+    background-color: beige;
+    text-decoration: none;
+    color: rgb(2, 0, 100);
+  }
+
+  #menu{
+      display: flex;
+      margin: 10px;
+      padding: 10px;
+      border: solid rgb(255, 145, 0);
+  }
+  #menu ul{
+     
+    margin: 10px;
+    padding: 10px;
+}
+#menu h3{
+   
+    margin: 10px;
+    padding: 10px;
+}
+
+#list h5 {
+     
+    margin: 5px;
+}
+#list {
+    border:solid chartreuse;
 }
