@@ -7,18 +7,14 @@ const {sequelize}=require('./db')
 const Restaurant = require('./models/restaurant');
 const Menu = require('./models/menu');
 const MenuItem = require('./models/menuItem');
-
 const initialiseDb = require('./initialiseDb');
 initialiseDb();
 const port = 3000;
 const app = express();
 app.use(express.json())
 app.use(express.urlencoded())
-
 app.use(express.static('public'));
 
-//app.use(express.json());
-//000000000000000000000000000000000000000000000000000000000000000000
 const handlebars = expressHandlebars({
     handlebars : allowInsecurePrototypeAccess(Handlebars)
 })
@@ -36,11 +32,11 @@ const seedDb = async () => {
     await Promise.all(restaurantPromises)
     console.log("db populated!")
 }
-seedDb();
+//seedDb();
 app.get('/',(req,res)=>{
     res.redirect('/restaurants')
 })
-//000000000000000000000000000000000000000000000000000000000000000
+
 const restaurantChecks = [
     check('name').not().isEmpty().trim().escape(),
     check('image').isURL(),
@@ -57,11 +53,11 @@ app.get('/menus', async (req, res) => {
     res.render('menus',{menus});
 });
 app.get('/menus/:id', async (req, res) => {
-     const menu = await Menu.findByPk(req.params.id)
-    //     {include: {
-    //        model: Restaurant,
-    //        include: MenuItem
-    //    }})
+     const menu = await Menu.findByPk(req.params.id,
+        {include: {
+           model: Restaurant,
+           include: MenuItem}
+       })
     res.render('menu',{menu});
 });
 
@@ -81,7 +77,7 @@ app.get('/restaurants/:id', async (req, res) => {
         }
     });
     res.render('restaurant',{restaurant});
-    // res.render('restaurant',{multrestaurants});
+    
 });
 
 app.post('/restaurants', restaurantChecks, async (req, res) => {
@@ -93,14 +89,7 @@ app.post('/restaurants', restaurantChecks, async (req, res) => {
     res.sendStatus(201);
 });
 
-// app.delete('/restaurants/:id', async (req, res) => {
-//     await Restaurant.destroy({
-//         where: {
-//             id: req.params.id
-//         }
-//     });
-//     res.sendStatus(200);
-// });
+
 
 // app.put('/restaurants/:id', restaurantChecks, async (req, res) => {
 //     const errors = validationResult(req);
@@ -115,8 +104,7 @@ app.get('/restaurant-data', async (req,res) => {
     const restaurants = await Restaurant.findAll();
     res.json({restaurants})
 })
-app.get('/new-restaurant',  (req,res)=>{
-    
+app.get('/new-restaurant',  (req,res)=>{    
     res.render('newrestaurant')
 })
 app.post('/new-restaurant', async (req,res)=>{
@@ -131,9 +119,8 @@ app.post('/new-restaurant', async (req,res)=>{
             restaurantAlert ='Failed to add Sauce'
             res.render('newrestaurant',{restaurantAlert})
         }
-   // res.status(201).send(`New Sauce ${newSauce.name} has been added`)
+  
 })
-
 
 app.patch('/restaurants/:id', async (req, res) => {
     const restaurant = await Restaurant.findByPk(req.params.id);

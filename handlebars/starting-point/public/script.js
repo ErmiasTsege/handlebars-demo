@@ -43,8 +43,6 @@ console.log(id)
     }
 
 })
-
-
 //add event listener when this button is clicked
 btn.addEventListener('click', async () => {
     list.style.display='block'
@@ -65,13 +63,6 @@ btn.addEventListener('click', async () => {
     }
   });
 
-//   deleteBtn.addEventListener('click',()=>{
-  
-//     oneRestaurant.remove()
-//    list.remove()
-//    menuList.remove()
-//   })
-
 //find the delete-button in the document
 
 //add event to delete this sauce
@@ -85,10 +76,6 @@ deleteBtn.addEventListener('click', async () => {
     console.log(res)
     window.location.assign('/restaurants')
 })
-
-//         oneRestaurant.remove()
-//    list.remove()
-//    menuList.remove()
 
 likeBtn.addEventListener('click',async()=>{
     let id = window.location.pathname.split('/restaurants/')[1]
