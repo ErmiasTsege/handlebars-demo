@@ -2,9 +2,11 @@
 let btn = document.getElementById('details-btn')
 //find the element with the id menu-bt
 const likeCounter = document.querySelector('#like-counter')
+const disLikeCounter = document.querySelector('#dislike-counter')
 let menuBtn = document.getElementById('menu-btn')
  let deleteBtn = document.querySelector('#delete-btn')
  let likeBtn=document.getElementById('like-btn')
+ let disLikeBtn=document.getElementById('dislike-btn')
 //find element with the id list
 let list = document.getElementById('list')
 let menuList = document.getElementById('menu')
@@ -94,7 +96,23 @@ likeBtn.addEventListener('click',async()=>{
         })
     })
 })
+disLikeBtn.addEventListener('click',async()=>{
+    let id = window.location.pathname.split('/restaurants/')[1]
+    let currentDisLikes=parseInt(disLikeCounter.innerHTML)
+    console.log(currentDisLikes ,id)
+    currentDisLikes-=1
+    disLikeCounter.innerHTML=currentDisLikes
+    let res=await fetch(`/restaurants/${id}`,{
+        method:'PUT',
+        headers:{
+            'Content-Type':'application/json',
 
+        },
+        body:JSON.stringify({
+            dislikes:currentDisLikes
+        })
+    })
+})
     
 
 //onclick function to delete a sauce by id

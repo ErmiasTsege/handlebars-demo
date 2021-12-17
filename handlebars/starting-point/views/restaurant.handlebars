@@ -3,14 +3,15 @@
         	<h2>{{restaurant.name}}</h2>
 	<img class="item-img" src="{{restaurant.image}}" />
     </div>    
-	<div>
+	<div id="all-btns">
 		<button id='details-btn'>Show Other Restaurants</button>
 		<button id='menu-btn'>Show Menu</button>       
         <button id='allrestaurants-btn'><a class="btn" href="/restaurants">Show All Restaurants</a></button>
-         <button id ='delete-btn'>Delete Restaurant</button>
-		 <h3>Likes: <span id ="like-counter">{{restaurant.likes}}</span></h3>
-		  <button id='like-btn'>Like</button>
-		  <button id='delete-btn'>Delete</button>
+        <button id ='delete-btn'>Delete Restaurant</button>
+		<h3>Likes: <span id ="like-counter">{{restaurant.likes}}</span></h3>
+	<h3>Dislikes: <span id ="dislike-counter">{{restaurant.dislikes}}</span></h3>
+		<button id='like-btn'>Like</button>
+		<button id='dislike-btn'>Dislike</button>
 	</div>
 	<div id='menu'></div>
 	<ul id='list'></ul>

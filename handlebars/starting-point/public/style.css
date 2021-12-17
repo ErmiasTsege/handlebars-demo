@@ -1,3 +1,8 @@
+
+*{
+  margin: 0;
+  padding:0;
+}
 body {
     background-color: cornsilk;
   }
@@ -52,5 +57,64 @@ input {
   margin :10px;
 }
 button{
-  margin:10px
+  margin:10px,
+  
+}
+#delete-btn{
+  background-color: brown;
+  color:white
+}
+
+.delete-btn{
+  background-color:tomato;
+  color: white
+}
+
+#like-btn{
+  background-color: rgb(27, 136, 45);
+  color:white
+}
+
+#dislike-btn{
+  background-color: tomato;
+  color: white;
+}
+
+span{
+  margin: 5px;
+}
+
+.new-restaurant-btn,button {
+  background-color: rgb(0, 128, 64);
+  color: white;
+}
+.new-restaurant-btn,button h2{
+ text-decoration-line: none;
+  color: white;
+}
+
+.maindiv{
+  margin:0 300px
+ 
+}
+h1{
+  margin :15px 0;
+  text-align: center;
+}
+h2{
+  margin :15px 0;
+  text-align: center;
+}
+#oneRestaurant{
+  margin:0 300px
+}
+#all-btns{
+  margin:15px 300px
+}
+#form-div{
+  margin:0 300px;
+  border:solid red
+}
+#back-div{
+  margin:0 30px
 }

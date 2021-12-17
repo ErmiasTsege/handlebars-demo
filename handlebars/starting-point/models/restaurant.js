@@ -8,7 +8,12 @@ Restaurant.init({
     likes:{
         type: DataTypes.INTEGER,
         defaultValue:0
+    },
+    dislikes:{
+        type: DataTypes.INTEGER,
+        defaultValue:0
     }
+    
 }, {
     sequelize: db,
     timestamps: false,
