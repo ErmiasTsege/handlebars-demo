@@ -1,8 +1,10 @@
 //find element with the id details-btn
 let btn = document.getElementById('details-btn')
 //find the element with the id menu-bt
+const likeCounter = document.querySelector('#like-counter')
 let menuBtn = document.getElementById('menu-btn')
- let deleteBtn = document.getElementById('delete-btn')
+ let deleteBtn = document.querySelector('#delete-btn')
+ let likeBtn=document.getElementById('like-btn')
 //find element with the id list
 let list = document.getElementById('list')
 let menuList = document.getElementById('menu')
@@ -10,12 +12,13 @@ list.style.display='none'
 menuList.style.display='none'
 let oneRestaurant = document.getElementById('oneRestaurant')
 menuBtn.addEventListener('click', async () => {
-const id= window.location.pathname.split('/restaurants/')
-console.log(id)
     menuList.style.display='block'
+let id = window.location.pathname.split('/restaurants/')[1]
+console.log(id)
+    
     //fetch the menu route from express
-   // let res = await fetch(`/menu/${id}`)
-   let res = await fetch('/menu/1')
+    let res = await fetch(`/menu/${id}`)
+   //let res = await fetch('/menu/5')
     console.log(res)
     //parse as json
     let restaurant = await res.json()
@@ -62,9 +65,58 @@ btn.addEventListener('click', async () => {
     }
   });
 
-  deleteBtn.addEventListener('click',()=>{
+//   deleteBtn.addEventListener('click',()=>{
   
-    oneRestaurant.remove()
-   list.remove()
-   menuList.remove()
-  })
+//     oneRestaurant.remove()
+//    list.remove()
+//    menuList.remove()
+//   })
+
+//find the delete-button in the document
+
+//add event to delete this sauce
+deleteBtn.addEventListener('click', async () => {
+    //get id from the current url path
+   const id = window.location.pathname.split('/restaurants/')[1]
+    //fetch the menu route from express for this id
+    let res = await fetch(`/restaurants/${id}`, {
+        method: 'DELETE',
+    })
+    console.log(res)
+    window.location.assign('/restaurants')
+})
+
+//         oneRestaurant.remove()
+//    list.remove()
+//    menuList.remove()
+
+likeBtn.addEventListener('click',async()=>{
+    let id = window.location.pathname.split('/restaurants/')[1]
+    let currentLikes=parseInt(likeCounter.innerHTML)
+    console.log(currentLikes ,id)
+    currentLikes+=1
+    likeCounter.innerHTML=currentLikes
+    let res=await fetch(`/restaurants/${id}`,{
+        method:'PUT',
+        headers:{
+            'Content-Type':'application/json',
+
+        },
+        body:JSON.stringify({
+            likes:currentLikes
+        })
+    })
+})
+
+    
+
+//onclick function to delete a sauce by id
+async function deleteRestaurant(id){
+    //delete a sauce matching parameter id
+    let res = await fetch(`/restaurants/${id}` ,{
+        method: 'DELETE'
+    })
+    console.log(res)
+    //send user back to the sauces path
+    window.location.assign('/restaurants')
+}

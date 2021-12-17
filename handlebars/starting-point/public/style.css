@@ -41,3 +41,16 @@ body {
 #list {
     border:solid chartreuse;
 }
+
+form{
+  margin: 30px;
+}
+input{
+  margin :10px;
+}
+input {
+  margin :10px;
+}
+button{
+  margin:10px
+}

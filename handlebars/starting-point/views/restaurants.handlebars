@@ -5,9 +5,12 @@
 		<article class="card">
 			<a href="/restaurants/{{id}}"><h2>{{name}}</h2></a>
 			<img class="item-img" src="{{image}}"/>
+			 {{!-- <button id ='delete-btn'>Delete Restaurant</button> --}}
+			 <button id='btn-{{id}}' class="delete-btn" onclick="deleteRestaurant({{id}})">Delete</button>
 		</article>
 	{{/each}}
 	<div>
-        <a href="/new-restaurant" class="new-restaurant-btn">Add New Restaurant!</a>
+       <button><a href="/new-restaurant" class="new-restaurant-btn"><h2>Add New Restaurant</h2></a></button> 
+	           <script src="/script.js"></script>
     </div>
 </section>

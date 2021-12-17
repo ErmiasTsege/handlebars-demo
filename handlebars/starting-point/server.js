@@ -12,6 +12,8 @@ const initialiseDb = require('./initialiseDb');
 initialiseDb();
 const port = 3000;
 const app = express();
+app.use(express.json())
+app.use(express.urlencoded())
 
 app.use(express.static('public'));
 
@@ -26,7 +28,7 @@ app.set('view engine', 'handlebars');
 const seedDb = async () => {    
    // await sequelize.sync({ force: true });
     const restaurants = [
-        {name : 'Chuys', image : '/img/chuys.gif'},
+        {name : 'Chuys', image : '/img/chuys.gif',},
         {name : 'Ihope', image: '/img/ihope.gif'},
         {name : 'Wendys', image: '/img/wendys-eyebrows.gif'}
     ]
@@ -34,7 +36,10 @@ const seedDb = async () => {
     await Promise.all(restaurantPromises)
     console.log("db populated!")
 }
-//seedDb();
+seedDb();
+app.get('/',(req,res)=>{
+    res.redirect('/restaurants')
+})
 //000000000000000000000000000000000000000000000000000000000000000
 const restaurantChecks = [
     check('name').not().isEmpty().trim().escape(),
@@ -88,24 +93,24 @@ app.post('/restaurants', restaurantChecks, async (req, res) => {
     res.sendStatus(201);
 });
 
-app.delete('/restaurants/:id', async (req, res) => {
-    await Restaurant.destroy({
-        where: {
-            id: req.params.id
-        }
-    });
-    res.sendStatus(200);
-});
+// app.delete('/restaurants/:id', async (req, res) => {
+//     await Restaurant.destroy({
+//         where: {
+//             id: req.params.id
+//         }
+//     });
+//     res.sendStatus(200);
+// });
 
-app.put('/restaurants/:id', restaurantChecks, async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
-    const restaurant = await Restaurant.findByPk(req.params.id);
-    await restaurant.update(req.body);
-    res.sendStatus(200);
-});
+// app.put('/restaurants/:id', restaurantChecks, async (req, res) => {
+//     const errors = validationResult(req);
+//     if (!errors.isEmpty()) {
+//       return res.status(400).json({ errors: errors.array() });
+//     }
+//     const restaurant = await Restaurant.findByPk(req.params.id);
+//     await restaurant.update(req.body);
+//     res.sendStatus(200);
+// });
 app.get('/restaurant-data', async (req,res) => {
     const restaurants = await Restaurant.findAll();
     res.json({restaurants})
@@ -135,6 +140,33 @@ app.patch('/restaurants/:id', async (req, res) => {
     await restaurant.update(req.body);
     res.sendStatus(200);
 });
+app.delete('/restaurants/:id', async (req,res)=>{
+    const deletedRestaurant = await Restaurant.destroy({
+        where: {id:req.params.id}
+    })
+    const restaurants = await Restaurant.findAll();
+    res.render('restaurants', {restaurants})
+})
+app.put('/restaurants/:id', async (req,res) => {
+    let updatedRestaurant = await Restaurant.update(req.body, {
+        where: {id: req.params.id}
+    })
+    const restaurant = await Restaurant.findByPk(req.params.id)
+    res.render('restaurant', {restaurant})
+})
+
+app.put('/restaurants/:id',async()=>{
+    let res = await fetch(`/restaurants/${id}`,{
+        method:'PUT',
+        headers:{
+            'Content-Type':'application/json',
+        },
+        body:JSON.stringify({
+            likes:1
+        })
+    })
+})
+
 
 app.listen(port, () => {
     console.log(`Server listening at http://localhost:${port}`);
